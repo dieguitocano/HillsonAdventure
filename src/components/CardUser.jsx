@@ -16,9 +16,9 @@ const CardUser = ({ user, deleteUser, updateUserById}) => {
         <p><span>BIRTHDAY</span></p>
         <p>{user.birthday}</p>
         <button onClick={() => deleteUser(user.id)}>
-         <i class="fa-solid fa-trash"></i>
+         <i className="fa-solid fa-trash"></i>
         </button>
-        <button onClick={() => updateUserById(user.id)}><i class="fa-solid fa-pen-to-square"></i></button>
+        <button onClick={() => updateUserById(user.id)}><i className="fa-solid fa-pen-to-square"></i></button>
       </article>
      
     </>

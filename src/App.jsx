@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form';
 import './App.css'
 import axios from 'axios'
 import CardUser from './components/CardUser'
 import logo from './resources/Hillson-removebg-preview.png'
+import Form from './components/Form'
 
 
 
@@ -11,8 +11,7 @@ function App() {
 
 
   const [users, setUsers] = useState()
-  const { handleSubmit, register } = useForm()
-
+  const [isShowForm, setIsShowForm] = useState(false)
 
   const URL = 'https://users-crud1.herokuapp.com/users/'
 
@@ -26,20 +25,15 @@ function App() {
 
   }
 
-  const createNewUser = () => {
-
-    const newUser = {
-      email: 'camilo@gmail.com',
-      password: 'vcvcv',
-      first_name: 'Camilo',
-      last_name: 'Castaño',
-      birthday: '2000-06-23'
-    }
-
+  const createNewUser = newUser => {
     axios.post(URL, newUser)
-      .then(res => console.log(res.data))
+      .then(res => {
+        console.log(res.data)
+        getAllUsers()
+      })
       .catch(err => console.log(err))
-      .finally(() => getAllUsers())
+
+
   }
 
   useEffect(() => {
@@ -78,32 +72,40 @@ function App() {
       .finally(() => getAllUsers())
   }
 
+  const showForm = () => setIsShowForm(!isShowForm)
+
 
 
   return (
-    <div className="App">
+    <>
+      <div className="App">
 
-      <div className='title-container'>
-        <div className='logo-container'> <img className='logo-img' src={logo} alt="" /></div>
+        <div className='title-container'>
+          <div className='logo-container'> <img className='logo-img' src={logo} alt="" /></div>
 
-        <div className='button-div'>
-          <button className='create-btn' onClick={createNewUser}>New customer</button>
+          <div className='button-div'>
+            <button className='create-btn' onClick={showForm}>{isShowForm? 'Hide form':'New customer'}</button>
+          </div>
+        </div>
+        <div>
+        {
+          isShowForm && <Form createNewUser={createNewUser}/>
+        }
+        </div>
+        <div className='card-box'>
+
+          {
+            users?.map(user => (
+              <CardUser
+                key={user.id}
+                user={user}
+                deleteUser={deleteUser}
+                updateUserById={updateUserById}
+              />
+            ))}
         </div>
       </div>
-      
-
-      <div className='card-box'>
-        {
-          users?.map(user => (
-            <CardUser
-              key={users[0].id}
-              user={user}
-              deleteUser={deleteUser}
-              updateUserById={updateUserById}
-            />
-          ))}
-      </div>
-    </div>
+    </>
   )
 }
 
