@@ -16,8 +16,6 @@ function App() {
   const URL = 'https://users-crud1.herokuapp.com/users/'
 
 
-  console.log(users)
-
   const getAllUsers = () => {
     axios.get(URL)
       .then(res => setUsers(res.data))
@@ -84,14 +82,18 @@ function App() {
           <div className='logo-container'> <img className='logo-img' src={logo} alt="" /></div>
 
           <div className='button-div'>
-            <button className='create-btn' onClick={showForm}>{isShowForm? 'Hide form':'New customer'}</button>
+            <button className='create-btn' onClick={showForm}>{isShowForm ? 'Hide form' : 'New customer'}</button>
+            <div className='form-container'>
+              {
+                isShowForm && <Form createNewUser={createNewUser} />
+              }
+            </div>
           </div>
+          
         </div>
-        <div>
-        {
-          isShowForm && <Form createNewUser={createNewUser}/>
-        }
-        </div>
+
+
+
         <div className='card-box'>
 
           {

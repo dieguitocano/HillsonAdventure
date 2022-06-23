@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 
 
-const Form = ({createNewUser}) => {
+const Form = ({ createNewUser }) => {
 
   const { handleSubmit, register, reset } = useForm()
 
@@ -44,8 +44,9 @@ const Form = ({createNewUser}) => {
         <label htmlFor="birthday"></label>
         <input type="date" id='birthday' {...register('birthday')} />
       </div>
-      <button className='submit-button'>Submit</button>
+      <div><button className='submit-button' onClick={() => submit()}>Submit</button></div>
     </form>
+
   )
 }
 
